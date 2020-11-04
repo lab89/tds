@@ -1,14 +1,17 @@
 class ListNode<T>{
     public element: T;
     public next: ListNode<T> | null;
+    public prev: ListNode<T> | null;
     constructor(element: T){
         this.element = element;
         this.next = null;
+        this.prev = null;
     }
 }
-class LinkedList<T>{
+class DoublyLinkedList<T>{
     private length:number = 0;
     private head: ListNode<T> | null = null;
+    private tail: ListNode<T> | null = null;
     construtor(){}
 
     public append(element: T): null{
@@ -27,3 +30,5 @@ class LinkedList<T>{
     public toString(): string {return "";}
     public getHead(): ListNode<T> | null { return null;}
 }
+
+export default DoublyLinkedList;
