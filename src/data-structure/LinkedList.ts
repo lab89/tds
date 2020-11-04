@@ -27,3 +27,5 @@ class LinkedList<T>{
     public toString(): string {return "";}
     public getHead(): ListNode<T> | null { return null;}
 }
+
+export default LinkedList;
