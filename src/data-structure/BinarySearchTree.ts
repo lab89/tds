@@ -96,7 +96,7 @@ class BinarySearchTree<T>{
         }
         return node;
     };
-    public remove(key: T): TreeNode<T> | null{
+    public remove(key: T): void {
         this.root = this.removeNode(this.root, key)
     }
     private removeNode(node: TreeNode<T>, key: T): TreeNode<T> | null{
