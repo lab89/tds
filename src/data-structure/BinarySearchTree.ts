@@ -129,3 +129,5 @@ class BinarySearchTree<T>{
 
 
 }
+
+export default BinarySearchTree;

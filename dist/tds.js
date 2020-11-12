@@ -10279,6 +10279,686 @@ try {
 
 /***/ }),
 
+/***/ "./src/data-structure/BinarySearchTree.ts":
+/*!************************************************!*\
+  !*** ./src/data-structure/BinarySearchTree.ts ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var TreeNode = /** @class */ (function () {
+    function TreeNode(key) {
+        this.key = null;
+        this.left = null;
+        this.right = null;
+        this.key = key;
+    }
+    return TreeNode;
+}());
+var BinarySearchTree = /** @class */ (function () {
+    function BinarySearchTree() {
+        this.root = null;
+    }
+    BinarySearchTree.prototype.insert = function (key) {
+        var newNode = new TreeNode(key);
+        if (this.root === null) {
+            this.root = newNode;
+        }
+        else {
+            this.insertNode(this.root, newNode);
+        }
+    };
+    BinarySearchTree.prototype.insertNode = function (node, newNode) {
+        if (newNode.key < node.key) {
+            if (node.left === null)
+                node.left = newNode;
+            else
+                this.insertNode(node.left, newNode);
+        }
+        else {
+            if (node.right === null)
+                node.right = newNode;
+            else
+                this.insertNode(node.right, newNode);
+        }
+    };
+    BinarySearchTree.prototype.inOrderTraverse = function (callback) {
+        this.inOrderTraverseNode(this.root, callback);
+    };
+    BinarySearchTree.prototype.inOrderTraverseNode = function (node, callback) {
+        if (node) {
+            this.inOrderTraverseNode(node.left, callback);
+            callback(node.key);
+            this.inOrderTraverseNode(node.right, callback);
+        }
+    };
+    BinarySearchTree.prototype.preOrderTraverse = function (callback) {
+        this.preOrderTraverseNode(this.root, callback);
+    };
+    BinarySearchTree.prototype.preOrderTraverseNode = function (node, callback) {
+        if (node) {
+            callback(node.key);
+            this.preOrderTraverseNode(node.left, callback);
+            this.preOrderTraverseNode(node.right, callback);
+        }
+    };
+    BinarySearchTree.prototype.postOrderTraverse = function (callback) {
+        this.postOrderTraverseNode(this.root, callback);
+    };
+    BinarySearchTree.prototype.postOrderTraverseNode = function (node, callback) {
+        if (node) {
+            this.postOrderTraverseNode(node.left, callback);
+            this.postOrderTraverseNode(node.right, callback);
+            callback(node.key);
+        }
+    };
+    BinarySearchTree.prototype.min = function () {
+        return this.minNode(this.root);
+    };
+    BinarySearchTree.prototype.minNode = function (node) {
+        if (node) {
+            while (node && node.left !== null) {
+                node = node.left;
+            }
+            return node.key;
+        }
+        return null;
+    };
+    BinarySearchTree.prototype.max = function () {
+        return this.maxNode(this.root);
+    };
+    BinarySearchTree.prototype.maxNode = function (node) {
+        if (node) {
+            while (node && node.left !== null) {
+                node = node.right;
+            }
+            return node.key;
+        }
+        return null;
+    };
+    BinarySearchTree.prototype.search = function (key) {
+        return this.searchNode(this.root, key);
+    };
+    BinarySearchTree.prototype.searchNode = function (node, key) {
+        if (!node)
+            return false;
+        if (key < node.key)
+            return this.searchNode(node.left, key);
+        else if (key > node.key)
+            return this.searchNode(node.right, key);
+        else
+            return true;
+    };
+    BinarySearchTree.prototype.findMinNode = function (node) {
+        while (node && node.left !== null) {
+            node = node.left;
+        }
+        return node;
+    };
+    ;
+    BinarySearchTree.prototype.remove = function (key) {
+        this.root = this.removeNode(this.root, key);
+    };
+    BinarySearchTree.prototype.removeNode = function (node, key) {
+        if (!node)
+            return null;
+        if (key < node.key) {
+            node.left = this.removeNode(node.left, key);
+            return node;
+        }
+        else if (key > node.key) {
+            node.right = this.removeNode(node.right, key);
+            return node;
+        }
+        else {
+            if (node.left === null && node.right === null) {
+                node = null;
+                return node;
+            }
+            if (node.left === null) {
+                node = node.right;
+                return node;
+            }
+            else if (node.right === null) {
+                node = node.left;
+                return node;
+            }
+            var aux = this.findMinNode(node.right);
+            node.key = aux.key;
+            node.right = this.removeNode(node.right, aux.key);
+            return node;
+        }
+    };
+    return BinarySearchTree;
+}());
+exports.default = BinarySearchTree;
+
+
+/***/ }),
+
+/***/ "./src/data-structure/DoublyLinkedList.ts":
+/*!************************************************!*\
+  !*** ./src/data-structure/DoublyLinkedList.ts ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ListNode = /** @class */ (function () {
+    function ListNode(element) {
+        this.element = element;
+        this.next = null;
+        this.prev = null;
+    }
+    return ListNode;
+}());
+var DoublyLinkedList = /** @class */ (function () {
+    function DoublyLinkedList() {
+        this.length = 0;
+        this.head = null;
+        this.tail = null;
+    }
+    DoublyLinkedList.prototype.construtor = function () { };
+    DoublyLinkedList.prototype.append = function (element) {
+        var node = new ListNode(element);
+        var current = null;
+        if (!this.head) {
+            this.head = node;
+        }
+        else {
+            current = this.head;
+        }
+        while (current.next) {
+            current = current.next;
+        }
+        current.next = node;
+        this.length++;
+        return null;
+    };
+    DoublyLinkedList.prototype.insert = function (position, element) {
+        var node = new ListNode(element);
+        var current = this.head;
+        var previous = null;
+        var index = 0;
+        if (position >= 0 && position <= length) {
+            if (position === 0) {
+                if (!this.head) {
+                    this.head = node;
+                    this.tail = node;
+                }
+                else {
+                    node.next = current;
+                    current.prev = node;
+                    this.head = node;
+                }
+            }
+            else if (position === length) {
+                current = this.tail;
+                current.next = node;
+                node.prev = current;
+                this.tail = node;
+            }
+            else {
+                while (index++ < position) {
+                    previous = current;
+                    current = current.next;
+                }
+                node.next = current;
+                previous.next = node;
+                current.prev = node;
+                node.prev = previous;
+            }
+            length++;
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    DoublyLinkedList.prototype.removeAt = function (position) {
+        if (position > -1 && position < length) {
+            var current = this.head;
+            var previous = null;
+            var index = 0;
+            if (position === 0) {
+                this.head = current.next;
+                if (this.length === 1) {
+                    this.tail = null;
+                }
+                else {
+                    this.head.prev = null;
+                }
+            }
+            else if (position === this.length - 1) {
+                current = this.tail;
+                this.tail = current.prev;
+                this.tail.next = null;
+            }
+            else {
+                while (index++ < position) {
+                    previous = current;
+                    current = current.next;
+                }
+                previous.next = current.next;
+                current.next.prev = previous;
+            }
+            this.length--;
+            return current.element;
+        }
+        else {
+            return null;
+        }
+        return null;
+    };
+    DoublyLinkedList.prototype.remove = function (element) {
+        var index = this.indexOf(element);
+        return this.removeAt(index);
+    };
+    DoublyLinkedList.prototype.indexOf = function (element) {
+        var current = this.head;
+        var index = -1;
+        while (current) {
+            if (element === current.element) {
+                return index;
+            }
+            index++;
+            current = current.next;
+        }
+        return index;
+    };
+    DoublyLinkedList.prototype.isEmpty = function () { return this.length === 0; };
+    DoublyLinkedList.prototype.size = function () { return this.length; };
+    DoublyLinkedList.prototype.toString = function () {
+        var current = this.head;
+        var string = "";
+        while (current) {
+            string += current.element;
+            current = current.next;
+        }
+        return string;
+    };
+    DoublyLinkedList.prototype.getHead = function () { return this.head; };
+    return DoublyLinkedList;
+}());
+exports.default = DoublyLinkedList;
+
+
+/***/ }),
+
+/***/ "./src/data-structure/Graph.ts":
+/*!*************************************!*\
+  !*** ./src/data-structure/Graph.ts ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Graph = /** @class */ (function () {
+    function Graph() {
+        this.vertices = [];
+        this.edges = new Map();
+    }
+    Graph.prototype.addVertex = function (v) {
+        this.vertices.push(v);
+        this.edges.set(v, []);
+    };
+    Graph.prototype.addEdge = function (v, w) {
+        this.edges.get(v).push(w);
+        this.edges.get(w).push(v);
+    };
+    Graph.prototype.toString = function () {
+        var s = '';
+        for (var i = 0; i < this.vertices.length; i++) {
+            s += this.vertices[i] + " -> ";
+            var neighbors = this.edges.get(this.vertices[i]);
+            for (var j = 0; j < neighbors.length; j++) {
+                s += neighbors[j];
+            }
+            s += '\n';
+        }
+        return s;
+    };
+    Graph.prototype.initializeColor = function () {
+        var color = {};
+        for (var i = 0; i < this.vertices.length; i++) {
+            color[this.vertices[i]] = 'white';
+        }
+        return color;
+    };
+    Graph.prototype.bfs = function (v, callback) {
+        var color = this.initializeColor();
+        var queue = [];
+        queue.push(v);
+        while (queue.length) {
+            console.log(queue.map(function (d) { return d; }));
+            var u = queue.shift();
+            var neighbors = this.edges.get(u);
+            color[u] = 'grey';
+            for (var i = 0; i < neighbors.length; i++) {
+                var w = neighbors[i];
+                if (color[w] === 'white') {
+                    color[w] = 'grey';
+                    queue.push(w);
+                }
+            }
+            color[u] = 'black';
+            if (callback)
+                callback(u);
+        }
+    };
+    Graph.prototype.BFS = function (v) {
+        var color = this.initializeColor();
+        var queue = [];
+        var d = {};
+        var pred = {};
+        queue.push(v);
+        for (var i = 0; i < this.vertices.length; i++) {
+            d[this.vertices[i]] = 0;
+            pred[this.vertices[i]] = null;
+        }
+        while (queue.length) {
+            console.log(queue.map(function (d) { return d; }));
+            var u = queue.shift();
+            var neighbors = this.edges.get(u);
+            color[u] = 'grey';
+            for (var i = 0; i < neighbors.length; i++) {
+                var w = neighbors[i];
+                if (color[w] === 'white') {
+                    color[w] = 'grey';
+                    d[w] = d[u] + 1;
+                    pred[w] = u;
+                    queue.push(w);
+                }
+            }
+            color[u] = 'black';
+        }
+        return {
+            distance: d,
+            predecessors: pred
+        };
+    };
+    return Graph;
+}());
+exports.default = Graph;
+
+
+/***/ }),
+
+/***/ "./src/data-structure/LinkedList.ts":
+/*!******************************************!*\
+  !*** ./src/data-structure/LinkedList.ts ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var ListNode = /** @class */ (function () {
+    function ListNode(element) {
+        this.element = element;
+        this.next = null;
+    }
+    return ListNode;
+}());
+var LinkedList = /** @class */ (function () {
+    function LinkedList() {
+        this.length = 0;
+        this.head = null;
+    }
+    LinkedList.prototype.construtor = function () { };
+    LinkedList.prototype.append = function (element) {
+        var node = new ListNode(element);
+        var current = null;
+        if (!this.head) {
+            this.head = node;
+        }
+        else {
+            current = this.head;
+        }
+        while (current.next) {
+            current = current.next;
+        }
+        current.next = node;
+        this.length++;
+        return null;
+    };
+    LinkedList.prototype.insert = function (position, element) {
+        if (position >= 0 && position <= length) {
+            var node = new ListNode(element);
+            var current = this.head;
+            var previous = null;
+            var index = 0;
+            if (position === 0) {
+                node.next = current;
+                this.head = node;
+            }
+            else {
+                while (index++ < position) {
+                    previous = current;
+                    current = current.next;
+                }
+                node.next = current;
+                previous.next = node;
+                length++;
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+    };
+    LinkedList.prototype.removeAt = function (position) {
+        if (position > -1 && position < this.length) {
+            var current = this.head;
+            var previous = null;
+            var index = 0;
+            if (position === 0) {
+                this.head = current.next;
+            }
+            else {
+                while (index++ < position) {
+                    previous = current;
+                    current = current.next;
+                }
+                previous.next = current.next;
+            }
+            length--;
+            return current.element;
+        }
+        else {
+            return null;
+        }
+    };
+    LinkedList.prototype.remove = function (element) {
+        var index = this.indexOf(element);
+        return this.removeAt(index);
+    };
+    LinkedList.prototype.indexOf = function (element) {
+        var current = this.head;
+        var index = -1;
+        while (current) {
+            if (element === current.element) {
+                return index;
+            }
+            index++;
+            current = current.next;
+        }
+        return index;
+    };
+    LinkedList.prototype.isEmpty = function () { return this.length === 0; };
+    LinkedList.prototype.size = function () { return this.length; };
+    LinkedList.prototype.toString = function () {
+        var current = this.head;
+        var string = "";
+        while (current) {
+            string += current.element;
+            current = current.next;
+        }
+        return string;
+    };
+    LinkedList.prototype.getHead = function () { return this.head; };
+    return LinkedList;
+}());
+exports.default = LinkedList;
+
+
+/***/ }),
+
+/***/ "./src/data-structure/PriorityQueue.ts":
+/*!*********************************************!*\
+  !*** ./src/data-structure/PriorityQueue.ts ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var QueueElement = /** @class */ (function () {
+    function QueueElement(element, priority) {
+        this.element = element;
+        this.priority = priority;
+    }
+    return QueueElement;
+}());
+var PriorityQueue = /** @class */ (function () {
+    function PriorityQueue() {
+        this.items = [];
+    }
+    PriorityQueue.prototype.enqueue = function (element, priority) {
+        var queueElement = new QueueElement(element, priority);
+        if (this.isEmpty())
+            this.items.push(queueElement);
+        else {
+            var added = false;
+            for (var i = 0; i < this.items.length; i++) {
+                if (queueElement.priority < this.items[i].priority) {
+                    this.items.splice(0, i, queueElement);
+                    added = true;
+                    break;
+                }
+            }
+            if (!added)
+                this.items.push(queueElement);
+        }
+    };
+    PriorityQueue.prototype.dequeue = function () {
+        return this.items.shift();
+    };
+    PriorityQueue.prototype.front = function () {
+        return this.items[0];
+    };
+    PriorityQueue.prototype.isEmpty = function () {
+        return this.items.length > 0;
+    };
+    PriorityQueue.prototype.clear = function () {
+        this.items = [];
+    };
+    PriorityQueue.prototype.size = function () {
+        return this.items.length;
+    };
+    PriorityQueue.prototype.toString = function () {
+        return this.items.toString();
+    };
+    return PriorityQueue;
+}());
+exports.default = PriorityQueue;
+
+
+/***/ }),
+
+/***/ "./src/data-structure/Queue.ts":
+/*!*************************************!*\
+  !*** ./src/data-structure/Queue.ts ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Queue = /** @class */ (function () {
+    function Queue() {
+        this.items = [];
+    }
+    Queue.prototype.enqueue = function (element) {
+        this.items.push(element);
+    };
+    Queue.prototype.dequeue = function () {
+        return this.items.shift();
+    };
+    Queue.prototype.front = function () {
+        return this.items[0];
+    };
+    Queue.prototype.isEmpty = function () {
+        return this.items.length > 0;
+    };
+    Queue.prototype.clear = function () {
+        this.items = [];
+    };
+    Queue.prototype.size = function () {
+        return this.items.length;
+    };
+    Queue.prototype.toString = function () {
+        return this.items.toString();
+    };
+    return Queue;
+}());
+exports.default = Queue;
+
+
+/***/ }),
+
+/***/ "./src/data-structure/Stack.ts":
+/*!*************************************!*\
+  !*** ./src/data-structure/Stack.ts ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Stack = /** @class */ (function () {
+    function Stack() {
+        this.items = [];
+    }
+    Stack.prototype.push = function (item) {
+        this.items.push(item);
+    };
+    Stack.prototype.pop = function () {
+        return this.items.pop();
+    };
+    Stack.prototype.peek = function () {
+        return this.items[this.items.length - 1];
+    };
+    Stack.prototype.isEmpty = function () {
+        return this.items.length > 0;
+    };
+    Stack.prototype.size = function () {
+        return this.items.length;
+    };
+    Stack.prototype.clear = function () {
+        this.items = [];
+    };
+    Stack.prototype.toString = function () {
+        return this.items.toString();
+    };
+    return Stack;
+}());
+exports.default = Stack;
+
+
+/***/ }),
+
 /***/ "./src/index.ts":
 /*!**********************!*\
   !*** ./src/index.ts ***!
@@ -10289,10 +10969,14 @@ try {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var f = function () {
-    console.log('TDS');
-};
-exports.default = { f: f };
+var BinarySearchTree_1 = __webpack_require__(/*! ./data-structure/BinarySearchTree */ "./src/data-structure/BinarySearchTree.ts");
+var DoublyLinkedList_1 = __webpack_require__(/*! ./data-structure/DoublyLinkedList */ "./src/data-structure/DoublyLinkedList.ts");
+var LinkedList_1 = __webpack_require__(/*! ./data-structure/LinkedList */ "./src/data-structure/LinkedList.ts");
+var PriorityQueue_1 = __webpack_require__(/*! ./data-structure/PriorityQueue */ "./src/data-structure/PriorityQueue.ts");
+var Queue_1 = __webpack_require__(/*! ./data-structure/Queue */ "./src/data-structure/Queue.ts");
+var Stack_1 = __webpack_require__(/*! ./data-structure/Stack */ "./src/data-structure/Stack.ts");
+var Graph_1 = __webpack_require__(/*! ./data-structure/Graph */ "./src/data-structure/Graph.ts");
+exports.default = { BinarySearchTree: BinarySearchTree_1.default, DoublyLinkedList: DoublyLinkedList_1.default, LinkedList: LinkedList_1.default, PriorityQueue: PriorityQueue_1.default, Queue: Queue_1.default, Stack: Stack_1.default, Graph: Graph_1.default };
 
 
 /***/ }),
