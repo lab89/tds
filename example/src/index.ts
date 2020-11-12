@@ -38,3 +38,6 @@ for(let i = 0 ; i < myVertices.length; i++){
     console.log(s);
 }
 
+graph.dfs(function(v: string){ console.log("dfs : " + v)});
+
+console.log(graph.DFS())

@@ -6,6 +6,7 @@ type BFSResult = {
 class Graph<T> {
     public vertices: Array<T> = [];
     public edges: Map<T, Array<T>> = new Map<T, Array<T>>();
+    public time: number = 0;
     constructor(){}
     
     public addVertex(v: T): void{
@@ -96,6 +97,77 @@ class Graph<T> {
         }
 
 
+    }
+
+    public dfs(callback: (v: T)=>void): void{
+        const color = this.initializeColor();
+        for(let i = 0; i < this.vertices.length; i++){
+            if(color[this.vertices[i]] === 'white'){
+                this.dfsVisit(this.vertices[i], color, callback);
+            }
+        }
+    }
+
+    private dfsVisit(u:T, color: any, callback: (v: T)=>void): void{
+        color[u] = "grey";
+        if(callback)
+            callback(u);
+        const neighbors = this.edges.get(u);
+        for(let i = 0; i < neighbors.length; i++){
+            const w = neighbors[i];
+            if(color[w] === 'white'){
+                this.dfsVisit(w, color, callback);
+            }
+        }
+        color[u] = "black";
+    }
+
+    public DFS(): {
+        discovery: any,
+        finished: any,
+        predecessors: any
+    } {
+        const color = this.initializeColor();
+        const d: any = {};
+        const f: any = {};
+        const p: any = {};
+        this.time = 0;
+        for(let i = 0; i < this.vertices.length; i++){
+            if(color[this.vertices[i]] === 'white'){
+                f[this.vertices[i]] = 0;
+                d[this.vertices[i]] = 0;
+                p[this.vertices[i]] = null;
+            }
+        }
+        for(let i = 0; i < this.vertices.length; i++){
+            if(color[this.vertices[i]] === 'white'){
+                this.DFSVisit(this.vertices[i], color, d, f, p);
+            }
+        }
+
+        return {
+            discovery: d,
+            finished: f,
+            predecessors: p
+        }
+    }
+
+    private DFSVisit(u: T, color: any, d: any, f: any, p: any){
+        console.log("방문" + u);
+        color[u] = "grey";
+        d[u] = ++this.time;
+        const neighbors = this.edges.get(u);
+        for(let i = 0; i < neighbors.length; i++){
+            const w = neighbors[i];
+            if(color[w] === "white"){
+                p[w] = u;
+                this.DFSVisit(w, color, d, f, p);
+            }
+        }
+
+        color[u] = "black";
+        f[u] = ++this.time;
+        console.log("탐색 " + u)
     }
 }
 export default Graph;

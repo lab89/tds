@@ -9,4 +9,10 @@ export class Graph<T> {
         distance : any
         predecessors: any
     }
+    dfs(callback: (v: T)=>void): void;
+    DFS(): {
+        discovery: any,
+        finished: any,
+        predecessors: any
+    }
 }
